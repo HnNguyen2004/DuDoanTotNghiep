@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <title>Dự đoán đậu/rớt tốt nghiệp</title>
+    <style>
+        body {
+            background: url("static/img/pexels-pixabay-159866.jpg");
+            background-size: cover;
+            color: #333;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        header {
+            background-color: #b22222;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #b22222;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #b22222; 
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #8b1a1a; 
+        }
+
+        .result {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px; 
+        }
+
+        .result h2 {
+            color: #b22222;
+            text-align: center;
+            font-size: 32px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        #chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 60px;
+            color: #FF0000;
+            animation: bounce 1s ease-in-out infinite; 
+            cursor: pointer;
+        }
+        
+        #chat-icon:hover {
+            background-color: rgba(224, 247, 250, 0.7);
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0); 
+            }
+            50% {
+                transform: translateY(-10px); 
+            }
+        }
+        
+        #chat-container {
+            position: fixed; 
+            bottom: 80px; 
+            right: 20px;
+            width: 300px;
+            display: none;
+            z-index: 10000; 
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        #chat-messages {
+            height: 200px; 
+            overflow-y: scroll; 
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+        }
+
+        .result {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            align-items: center; 
+            height: 200px; 
+            border: 2px solid #b22222; 
+            padding: 20px; 
+            border-radius: 10px; 
+            background-color: white; 
+            margin: 20px 0;
+        }
+        
+        .result h2 {
+            color: #b22222;
+            text-align: center;
+            font-size: 32px;
+        }
+        
+        .small-text {
+            font-size: 14px;
+            color: #555; 
+            text-align: center; 
+            margin-top: auto; 
+        }        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Trang Dự Đoán Đậu/Rớt Tốt Nghiệp</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="intro">
+            <h2>Dự đoán cơ hội tốt nghiệp của bạn</h2>
+            <p>Điền thông tin vào form dưới đây và chúng tôi sẽ giúp bạn dự đoán khả năng tốt nghiệp dựa trên các thông tin cung cấp.</p>
+        </div>
+
+        <!-- Form -->
+        <form action="/predict" method="POST">
+            <label for="age">Tuổi:</label>
+            <input type="text" id="age" name="age" placeholder="Nhập tuổi của bạn (Ví dụ: 18 )">
+
+            <label for="sex">Giới tính (0: Nữ, 1: Nam):</label>
+            <input type="text" id="sex" name="sex" placeholder="Nhập giới tính của bạn">
+
+            <label for="gpa">Điểm GPA:</label>
+            <input type="text" id="gpa" name="gpa" placeholder="Nhập điểm GPA của bạn (Ví dụ: 1.52)">
+
+            <label for="credits_earned">Số tín chỉ đã hoàn thành:</label>
+            <input type="text" id="credits_earned" name="credits_earned" placeholder="Nhập số tín chỉ đã hoàn thành (Ví dụ: 125)">
+
+            <label for="study_hours_per_week">Số giờ học mỗi tuần:</label>
+            <input type="text" id="study_hours_per_week" name="study_hours_per_week" placeholder="Nhập số giờ học mỗi tuần (Ví dụ: 30)">
+
+            <label for="extracurricular_activities">Hoạt động ngoại khóa:</label>
+            <input type="text" id="extracurricular_activities" name="extracurricular_activities" placeholder="Nhập hoạt động ngoại khóa (Ví dụ: 3)">
+
+            <label for="work_experience_months">Kinh nghiệm làm việc (tháng):</label>
+            <input type="text" id="work_experience_months" name="work_experience_months" placeholder="Nhập số tháng kinh nghiệm làm việc (Ví dụ: 15)">
+
+            <label for="financial_aid">Hỗ trợ tài chính (0: Không, 1: Có):</label>
+            <input type="text" id="financial_aid" name="financial_aid" placeholder="Có nhận hỗ trợ tài chính không?">
+
+            <input type="submit" value="Dự đoán">
+        </form>
+    </div>
+
+    <div class="result">
+        {% if prediction_text %}
+            <h2>{{ prediction_text }}</h2>
+        {% endif %}
+        <p class="small-text">Nếu bạn có thắc mắc gì, liên hệ với chúng tôi. </p>
+    </div>
+
+
+    <div id="chat-icon" draggable="true"><i class="bi bi-chat-right-dots-fill"></i></div>
+
+    <div id="chat-container">
+      <h4>Chat with a teacher</h4>
+      <div id="chat-messages"></div>
+      <input
+        id="chat-input"
+        type="text"
+        placeholder="Enter your message"
+        class="form-control mb-2"
+      />
+      <button id="send-chat-btn" class="btn btn-custom">Send</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+      var socket = io.connect("http://127.0.0.1:5000");
+
+      socket.on("connect", function () {
+        console.log("Connected to the server");
+      });
+
+      socket.on("response", function (msg) {
+        $("#chat-messages").append(
+          "<div><strong>Giáo viên:</strong> " + msg + "</div>"
+        );
+        $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight); 
+      });
+
+      $("#send-chat-btn").click(function () {
+        var message = $("#chat-input").val();
+        if (message.trim() !== "") {
+          socket.emit("user_message", message);
+          $("#chat-messages").append(
+            "<div><strong>Bạn:</strong> " + message + "</div>"
+          );
+          $("#chat-input").val("");
+          $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight); 
+        }
+      });
+
+      $("#chat-icon").click(function () {
+        $("#chat-container").toggle(); 
+      });
+    </script>
+
+</body>
+</html>

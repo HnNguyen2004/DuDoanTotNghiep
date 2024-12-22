@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+        }
+        .object {
+            margin-bottom: 20px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <div class="container">
+            <h1>Sign Up</h1>
+              <label for="username">Username</label>
+              <input class="object" type="text" name="username" required>
+        
+              <label for="email">Email</label>
+              <input type="email" name="email" required>
+        
+              <label for="password">Password</label>
+              <input class="object" type="password" name="password" required>
+        
+              
+              </select>
+              <button type="submit" class="submit-btn">Đăng ký</button>
+        </div>
+    </form>
+</body>
+</html>
